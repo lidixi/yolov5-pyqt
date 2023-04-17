@@ -1,0 +1,78 @@
+python3 train.py --img 640 --epochs 3 --data coco128.yaml --weights yolov5s.pt  # 3. train 
+python3 train.py --data coco.yaml --epochs 100 --weights '' --cfg yolov5n.yaml  --batch-size 16
+python3 train.py --data custom.yaml --weights yolov5s.pt  #从预训练权重开始，中小型数据集
+python train.py --data custom.yaml --weights '' --cfg yolov5s.yaml   #从零开始，大型数据集
+ 
+python3 train.py --img 640 --epochs 100 --data coco128.yaml --weights yolov5s.pdparams --batch-size 8  
+       
+python3 train.py --img 640 --epochs 100 --data /Users/dixili/Documents/paddle/datasets/CuirassierDataSet/data.yaml --weights yolov5s.pdparams --batch-size 8  
+
+python3 train.py --img 640 --epochs 10 --data /Users/dixili/Documents/paddle/datasets/CuirassierDataSet/data.yaml --weights yolov5s.pdparams --batch-size 8  
+
+tensorboard --logdir=/Users/dixili/Documents/pytorch/yolov5-master/runs/train/exp4
+
+python train.py --data /home/aistudio/LaptopDataSet/data.yaml --epochs 50 --batch-size 32 --cfg yolov5s.yaml
+
+opt模型主要参数解析：
+    --weights：初始化的权重文件的路径地址
+    --cfg：模型yaml文件的路径地址
+    --data：数据yaml文件的路径地址
+    --hyp：超参数文件路径地址
+    --epochs：训练轮次
+    --batch-size：喂入批次文件的多少
+    --img-size：输入图片尺寸
+    --rect:是否采用矩形训练，默认False
+    --resume:接着打断训练上次的结果接着训练
+    --nosave:不保存模型，默认False
+    --notest:不进行test，默认False
+    --noautoanchor:不自动调整anchor，默认False
+    --evolve:是否进行超参数进化，默认False
+    --bucket:谷歌云盘bucket，一般不会用到
+    --cache-images:是否提前缓存图片到内存，以加快训练速度，默认False
+    --image-weights：使用加权图像选择进行训练
+    --device:训练的设备，cpu；0(表示一个gpu设备cuda:0)；0,1,2,3(多个gpu设备)
+    --multi-scale:是否进行多尺度训练，默认False
+    --single-cls:数据集是否只有一个类别，默认False
+    --adam:是否使用adam优化器
+    --sync-bn:是否使用跨卡同步BN,在DDP模式使用
+    --local_rank：DDP参数，请勿修改
+    --workers：最大工作核心数
+    --project:训练模型的保存位置
+    --name：模型保存的目录名称
+--exist-ok：模型目录是否存在，不存在就创建
+
+
+python3 detect.py --weights yolov5s.pt --source 0                               # webcam
+                                           img.jpg                         # image
+                                           vid.mp4                         # video
+                                           screen                          # screenshot
+                                           path/                           # directory
+                                                              
+python3 detect.py --source /Users/dixili/Documents/pytorch/cuirassier.mp4 --weight yolov5n.pt --view-img
+
+python3 detect.py --source /Users/dixili/Documents/pytorch/raccoon.mp4 --weight /Users/dixili/Documents/pytorch/yolov5-master/weights/raccoon_best.pt --view-img
+
+
+ python3 detect.py --source /Users/dixili/Documents/pytorch/datasets/little  --weight /Users/dixili/Documents/pytorch/yolov5-master/weights/laptop.pt
+
+ python3 detect.py --source /Users/dixili/Documents/paddle/yolov5-Paddle-main/little  --weight /Users/dixili/Documents/paddle/yolov5-Paddle-main/runs/train/exp/weights/best.pdparams
+
+python3 detect.py --source /Users/dixili/Documents/paddle/yolov5-Paddle-main/cuirassier.mp4 --weight yolov5n.pdparams --view-img
+
+
+--weights:权重的路径地址
+--source:测试数据，可以是图片/视频路径，也可以是'0'(电脑自带摄像头),也可以是rtsp等视频流
+--output:网络预测之后的图片/视频的保存路径
+--img-size:网络输入图片大小
+--conf-thres:置信度阈值
+--iou-thres:做nms的iou阈值
+--device:是用GPU还是CPU做推理
+--view-img:是否展示预测之后的图片/视频，默认False
+--save-txt:是否将预测的框坐标以txt文件形式保存，默认False
+--classes:设置只保留某一部分类别，形如0或者0 2 3
+--agnostic-nms:进行nms是否也去除不同类别之间的框，默认False
+--augment:推理的时候进行多尺度，翻转等操作(TTA)推理
+--update:如果为True，则对所有模型进行strip_optimizer操作，去除pt文件中的优化器等信息，默认为False
+--project：推理的结果保存在runs/detect目录下
+--name：结果保存的文件夹名称
+
